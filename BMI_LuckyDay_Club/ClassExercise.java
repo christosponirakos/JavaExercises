@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classexercise;
 
 import java.util.ArrayList;
@@ -14,9 +9,7 @@ import java.util.Scanner;
  */
 public class ClassExercise {
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
@@ -24,11 +17,22 @@ public class ClassExercise {
         printMessage("What's your name?");
         String name = input.next();
 
-        printMessage("What is your gender?");
-        String gender = input.next(); //ask for char
+        printMessage("What is your gender? Choose M for male and F for female");
+        while (!input.hasNext("[MF]")) {
+            System.out.println("Invalid input. Please Choose M for male and F for female");
+            input.next();
+        }
+        String gender = input.next();
 
-        printMessage("What is your age?");
-        int age = input.nextInt();
+        printMessage("What is your age? Please enter a positive number!");
+        int age;
+        do {
+            while (!input.hasNextInt()) {
+                System.out.println("Invalid input");
+                input.nextInt(); 
+            }
+            age = input.nextInt();
+        } while (age <= 0);
 
         ageControl(age);
 
@@ -52,10 +56,11 @@ public class ClassExercise {
         printMessage("Weight in kg: ");
         double weight = input.nextDouble();
         getBMI(height, weight);
-        
-        getLuckyDay(age);
-        
-        entranceControl(int luckyDay, int age );
+
+        int luckyDay = 2; //getLuckyDay(age);
+        System.out.println("Your lucky day is " + luckyDay);
+
+        entranceControl(luckyDay, age, gender, name);
 
     }
 
@@ -63,7 +68,7 @@ public class ClassExercise {
         if (age <= 5) {
             System.out.println("You are too young for this app.");
         } else if (age > 5 && age <= 18) {
-            System.out.println("Oh you are a student");
+            System.out.println("Oh, you are a student");
         } else if (age > 18 && age <= 40) {
             System.out.println("Well, you must be employed.");
         }
@@ -76,13 +81,13 @@ public class ClassExercise {
 
     static void ageResponse(int age) {
         if (age <= 5) {
-            int ageDif = 5 - age;
+            int ageDif = age - 5;
             System.out.println("Come back in" + ageDif + " years when you will be a student.");
-        } else if (age > 5 && age <= 18) {
-            int ageDif = 18 - age;
+        } else if (age <= 18) {
+            int ageDif = age - 18;
             System.out.println("Keep up... " + ageDif + " more years left and afterwards you will make money.");
-        } else if (age > 18 && age <= 40) {
-            int ageDif = 40 - age;
+        } else if (age <= 40) {
+            int ageDif = age - 18;
             System.out.println("You finished school " + ageDif + " years ago.");
         }
     }
@@ -139,27 +144,41 @@ public class ClassExercise {
         }
     }
 
-    public static void getLuckyDay(int age) {
+    static int getLuckyDay(int age) {
         int ageInDays = age * 365;
         int sum = 0;
         while (ageInDays > 0) {
             sum = sum + ageInDays % 10;
             ageInDays = ageInDays / 10;
         }
-        int luckyDay = sum%7;
-        System.out.print("Your lucky day is "+ luckyDay);
-    }
-    
-    static void entranceControl(int luckyDay, int age){
-        if(luckyDay == 2 && (age>= 20 && age<=40))
-            System.out.println("Welcome to the club");
-        else if (luckyDay != 2)
-            System.out.println("I am sorry, you cannot enter the club because your Luckyday is not Wednesday");
-        else if ( age< 20 || age > 40)
-            System.out.println("I am sorry, you cannot enter the club because you are not in the allowed age range");
-        
-            
-        }
+        int luckyDay = sum % 7;
+        return luckyDay;
     }
 
+    static void entranceControl(int luckyDay, int age, String gender, String name) {
+        if (luckyDay == 2 && (age >= 20 && age <= 40)) {
+            if (age > 20 && age < 25) {
+                System.out.println("Welcome to the club");
+            } else if ("M".equals(gender)) {
+                System.out.println("Welcome to the club Mr. " + name);
+            } else if ("F".equals(gender)) {
+                Scanner input = new Scanner(System.in);
+                System.out.println("Are you married");
+                String married = input.next();
+
+                if ("yes".equals(married)) {
+                    System.out.println("Welcome to the club Mrs. " + name);
+                } else {
+                    System.out.println("Welcome to the club Ms. " + name);
+                }
+            }
+        } else if (luckyDay != 2 && (age < 20 || age > 40)) {
+            System.out.println("I am sorry, you cannot enter the club because you are not in the allowed age range and your Luckyday is not Wednesday");
+        } else if (age < 20 || age > 40) {
+            System.out.println("I am sorry, you cannot enter the club because you are not in the allowed age range");
+        } else if (luckyDay != 2) {
+            System.out.println("I am sorry, you cannot enter the club because your Luckyday is not Wednesday");
+        }
+
+    }
 }
