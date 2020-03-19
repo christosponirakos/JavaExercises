@@ -1,2 +1,2 @@
 # JavaExercises
-OOP - Java Exercises
+Exercises in Java from the coding bootcamp afdemp.com
