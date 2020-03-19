@@ -1,0 +1,14 @@
+1. Create abstract class Computer ("brand", "price", "getPrice()", "getBrand()", "setBrand()").
+Only "setPrice()" will be abstract. Subclasses Laptop, Desktop, Tablet.
+1a. Tablet has hasBluetooth: boolean
+    Desktop has hasExtraLight: boolean
+    Laptop has hasWifi: boolean
+1b. Brand can be Sony, Acer, Asus, Lenovo.   
+2. You can only specify "price", "brand" and extraCharacteristics while creating the object(use appropriate Constructors).
+No class will have a default constructor.
+All classes will have 2 constructors. One with "price" and one with "price-brand".
+2a. If any PC has any extra characteristics, then setPrice() will add 20$ to the price.
+3. Make 10 objects and store to list.
+4. Get the sum of prices according to "brand". Print sum of each brand and print total.
+5.Modify the program so that user(main method) cannot change the brand of the computer.
+6.Get the sum of prices according to "object type".
